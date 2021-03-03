@@ -13,17 +13,19 @@ file_name = join(data_dir,file)
 mat_dict = sio.loadmat(file_name)
 print("mat_dict.keys() : ",mat_dict.keys())
 X = mat_dict["X"]
+m = X.shape[0]
 
 # remove mean and feature scaling is recommended by Andrew Ng
 X_normalized = normalize_features(X) 
-x1 = X[:,0]
-x2 = X[:,1]
-m = x1.size
+
+# m = x1.size
 sigma = (1/m)*np.dot(X_normalized.T,X_normalized) # nxn (n is 2 : number of features)
 
-def plot():
+def plot(_X,title):
+    x1 = _X[:,0]
+    x2 = _X[:,1]
     plt.plot(x1,x2,'o')
-    plt.title('dataset before pre processing')
+    plt.title(title)
     plt.xlabel('x1')
     plt.ylabel('x2')
     plt.grid()
@@ -47,6 +49,7 @@ def svd():
     # plt.plot(Z,'o')
     # plt.show()
 
-plot()    
+plot(X,'dataset before pre processing')   
+plot(X_normalized,'dataset after pre processing')   
 svd()
 # learn()
